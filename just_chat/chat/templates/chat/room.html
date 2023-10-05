@@ -87,14 +87,14 @@
       </div>
       <div class="messages">
         <ul id="chat-log">
-          {% comment %} <li class="sent">
+           <li class="sent">
             <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
             <p>How the hell am I supposed to get a jury to believe you when I am not even sure that I do?!</p>
           </li>
           <li class="replies">
             <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-            <p>When you're backed against the wall, break the god damn thing down.</p>
-          </li> {% endcomment %}
+            <p>{{room_name}}</p>
+          </li> 
         </ul>
       </div>
       <div class="message-input">
@@ -108,16 +108,16 @@
       </div>
     </div>
   </div>
-
-<script src="{% static 'main.js' %}"></script>
-<script src="{% static 'reconnecting-websocket.js' %}"></script>
-{{room_name|json_script:'room-name'}}
-{{user_name|json_script:'user-name'}}
+<!-- <script src="{% static 'main.js' %}"></script> -->
+<!-- <script src="{% static 'reconnecting-websocket.js' %}"></script> -->
+{{room_name|json_script:'room_name'}}
+{{request.user.username|json_script:'user-name'}}
 <script>
-    const roomName = JSON.parse(document.getElementById('room-name').textContent)
-    const username = JSON.parse(document.getElementById('user-name').textContent)
+    const roomName = document.querySelector('#room_name').textContent.replaceAll('"','')
+    // const username = document.querySelector('#user_name').textContent.replaceAll('"', '')
+    console.log(roomName)
 
-    var chatSocket = new ReconnectingWebSocket(
+    var chatSocket = new WebSocket(
         'ws://' + window.location.host +
         '/ws/chat/' + roomName + '/');
 
@@ -152,7 +152,7 @@
         chatSocket.send(JSON.stringify({
             'command': 'new_message',
             'message': message,
-            'from': username
+            'from': 'vic'
         }));
 
         messageInputDom.value = '';
