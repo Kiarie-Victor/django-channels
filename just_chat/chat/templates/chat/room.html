@@ -93,7 +93,7 @@
           </li>
           <li class="replies">
             <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-            <p>{{room_name}}</p>
+            <p>{{user.username}}</p>
           </li> 
         </ul>
       </div>
@@ -111,10 +111,10 @@
 <!-- <script src="{% static 'main.js' %}"></script> -->
 <!-- <script src="{% static 'reconnecting-websocket.js' %}"></script> -->
 {{room_name|json_script:'room_name'}}
-{{request.user.username|json_script:'user-name'}}
+{{user.username|json_script:'user_name'}}
 <script>
     const roomName = document.querySelector('#room_name').textContent.replaceAll('"','')
-    // const username = document.querySelector('#user_name').textContent.replaceAll('"', '')
+    const username = document.querySelector('#user_name').textContent.replaceAll('"', '')
     console.log(roomName)
 
     var chatSocket = new WebSocket(
@@ -152,7 +152,7 @@
         chatSocket.send(JSON.stringify({
             'command': 'new_message',
             'message': message,
-            'from': 'vic'
+            'from': username
         }));
 
         messageInputDom.value = '';
