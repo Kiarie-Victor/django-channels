@@ -85,7 +85,7 @@
           <i class="fa fa-instagram" aria-hidden="true"></i>
         </div>
       </div>
-      <div class="messages">
+      <div class="messages" id="divmessage">
         <ul id="chat-log">
            <li class="sent">
             <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
@@ -134,6 +134,7 @@
         } else if (data['command'] === 'new_message'){
           createMessage(data['message']);
         }
+        scrollBottom()
     };
 
     chatSocket.onclose = function(e) {
@@ -170,7 +171,7 @@
       pTag.textContent = data.content;
       imgTag.src = 'http://emilcarlsson.se/assets/mikeross.png';
       
-      if (author === username) {
+      if (author === !username) {
         msgListTag.className = 'sent';
       } else {
         msgListTag.className = 'replies';
@@ -178,6 +179,12 @@
       msgListTag.appendChild(imgTag);
       msgListTag.appendChild(pTag);
       document.querySelector('#chat-log').appendChild(msgListTag);
+    }
+
+    function scrollBottom(){
+      const divMessage  = document.querySelector('#divmessage')
+
+      divMessage.scrollTop = divMessage.scrollHeight
     }
 
 </script>
