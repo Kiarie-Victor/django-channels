@@ -78,7 +78,7 @@
     <div class="content">
       <div class="contact-profile">
         <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-        <p>{{ username }}</p>
+        <p>{{ user.username }}</p>
         <div class="social-media">
           <i class="fa fa-facebook" aria-hidden="true"></i>
           <i class="fa fa-twitter" aria-hidden="true"></i>
@@ -93,7 +93,7 @@
           </li>
           <li class="replies">
             <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-            <p>{{user.username}}</p>
+            <p>Bitch, Dont You trust me.I thought we spoke about this and that you should trust me.</p>
           </li> 
         </ul>
       </div>
@@ -108,14 +108,13 @@
       </div>
     </div>
   </div>
-<!-- <script src="{% static 'main.js' %}"></script> -->
+<script src="{% static 'main.js' %}"></script>
 <!-- <script src="{% static 'reconnecting-websocket.js' %}"></script> -->
 {{room_name|json_script:'room_name'}}
 {{user.username|json_script:'user_name'}}
 <script>
     const roomName = document.querySelector('#room_name').textContent.replaceAll('"','')
     const username = document.querySelector('#user_name').textContent.replaceAll('"', '')
-    console.log(roomName)
 
     var chatSocket = new WebSocket(
         'ws://' + window.location.host +

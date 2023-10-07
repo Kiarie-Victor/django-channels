@@ -1,8 +1,21 @@
 from django.contrib.auth import get_user_model
-from asgiref.sync import async_to_sync
+from asgiref.sync import async_to_sync, sync_to_async
 from channels.generic.websocket import WebsocketConsumer
 import json
 from .models import Message
+from channels.auth import BaseMiddleware
+
+class WebSocketAuthMiddleware(BaseMiddleware):
+    async def __call__(self, scope, receive, send):
+        scope['user'] = await self.get_user(scope)
+        return await super().__call__(scope, receive, send)
+
+    @sync_to_async
+    def get_user(self, scope):
+        if 'user' in scope:
+            return scope['user']
+        return None
+
 
 User = get_user_model()
 
