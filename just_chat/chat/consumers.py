@@ -4,6 +4,7 @@ from channels.generic.websocket import WebsocketConsumer
 import json
 from .models import Message
 from channels.auth import BaseMiddleware
+from django.utils.timesince import timesince
 
 class WebSocketAuthMiddleware(BaseMiddleware):
     async def __call__(self, scope, receive, send):
@@ -30,8 +31,7 @@ class ChatConsumer(WebsocketConsumer):
         self.send_message(content)
 
     def new_message(self, data):
-        author = data['from']
-        author_user = User.objects.get(username=author)
+        author_user = User.objects.get(username=data['from'])
         message = Message.objects.create(
             author=author_user, 
             content=data['message'])
@@ -51,7 +51,7 @@ class ChatConsumer(WebsocketConsumer):
         return {
             'author': message.author.username,
             'content': message.content,
-            'timestamp': str(message.timestamp)
+            'timestamp': timesince(message.timestamp)
         }
 
     commands = {
