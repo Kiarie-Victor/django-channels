@@ -1,0 +1,14 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<main class="max-w-6xl mx-auto p-6">
+<h1 class ='text-2xl'> Edit User</h1>
+
+<form method = 'post' action ='.'>
+    {% csrf_token %}
+    {{form.as_p}}
+
+    <button class='mt-6 inline-block py-2 px-6 bg-rose-600 text-white rounded-xl'>Add</button>
+</form>
+</main>
+{% endblock %}
