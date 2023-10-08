@@ -90,6 +90,8 @@
            <li class="sent">
             <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
             <p>How the hell am I supposed to get a jury to believe you when I am not even sure that I do?!</p>
+            <br>
+            <span>today</span>
           </li>
           <li class="replies">
             <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
@@ -154,7 +156,6 @@
             'message': message,
             'from': username
         }));
-
         messageInputDom.value = '';
     };
 
@@ -167,7 +168,11 @@
       var msgListTag = document.createElement('li');
       var imgTag = document.createElement('img');
       var pTag = document.createElement('p');
-      pTag.textContent = data.content;
+      var spantext = document.createElement('span')
+      var divText = document.createElement('div')
+      spantext.textContent = data['timestamp']
+      console.log(data['timestamp'])
+      pTag.textContent = data['content'];
       imgTag.src = 'http://emilcarlsson.se/assets/mikeross.png';
       
       if (author === !username) {
@@ -176,7 +181,9 @@
         msgListTag.className = 'replies';
       }
       msgListTag.appendChild(imgTag);
-      msgListTag.appendChild(pTag);
+      divText.appendChild(pTag)
+      divText.appendChild(spantext)
+      msgListTag.append(divText)
       document.querySelector('#chat-log').appendChild(msgListTag);
     }
 
